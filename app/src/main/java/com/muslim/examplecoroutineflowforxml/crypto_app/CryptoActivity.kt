@@ -2,12 +2,13 @@ package com.muslim.examplecoroutineflowforxml.crypto_app
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.muslim.examplecoroutineflowforxml.R
+import androidx.lifecycle.lifecycleScope
 import com.muslim.examplecoroutineflowforxml.databinding.ActivityCryptoBinding
+import kotlinx.coroutines.launch
 
 class CryptoActivity : AppCompatActivity() {
 
@@ -34,17 +35,21 @@ class CryptoActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.state.observe(this) {
-            when (it) {
-                is State.Initial -> {
-                    binding.progressBarLoading.isVisible = false
-                }
-                is State.Loading -> {
-                    binding.progressBarLoading.isVisible = true
-                }
-                is State.Content -> {
-                    binding.progressBarLoading.isVisible = false
-                    adapter.submitList(it.currencyList)
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                when (it) {
+                    is State.Initial -> {
+                        binding.progressBarLoading.isVisible = false
+                    }
+
+                    is State.Loading -> {
+                        binding.progressBarLoading.isVisible = true
+                    }
+
+                    is State.Content -> {
+                        binding.progressBarLoading.isVisible = false
+                        adapter.submitList(it.currencyList)
+                    }
                 }
             }
         }
