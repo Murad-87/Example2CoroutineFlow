@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.muslim.examplecoroutineflowforxml.crypto_app.CryptoActivity
 import com.muslim.examplecoroutineflowforxml.databinding.ActivityMainBinding
+import com.muslim.examplecoroutineflowforxml.team_score.TeamScoreActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.buttonCryptoActivity.setOnClickListener {
             startActivity(CryptoActivity.newIntent(this))
+        }
+        binding.teamScoreActivity.setOnClickListener {
+            startActivity(TeamScoreActivity.newIntent(this))
         }
     }
 }
