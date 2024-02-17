@@ -1,10 +1,9 @@
-package com.muslim.examplecoroutineflowforxml.example
+package com.muslim.examplecoroutineflowforxml.example.example2
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
@@ -12,27 +11,19 @@ val scope = CoroutineScope(Dispatchers.IO)
 
 suspend fun main() {
 
-    val flow = MutableSharedFlow<Int>()
-
-    scope.launch {
-        repeat(100) {
-            println("Emitted: $it")
-            flow.emit(it)
-            delay(1000)
-        }
-    }
-
     val job1 = scope.launch {
+        val flow = getFlow()
         flow.collect {
-            println("Got form 1st collector: $it")
+            println(it)
         }
     }
 
     delay(5000)
 
     val job2 = scope.launch {
+        val flow = getFlow()
         flow.collect {
-            println("Got form 2nd collector: $it")
+            println(it)
         }
     }
 

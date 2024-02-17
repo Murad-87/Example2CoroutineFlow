@@ -24,5 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding.teamScoreActivity.setOnClickListener {
             startActivity(TeamScoreActivity.newIntent(this))
         }
+
+        val context = this.applicationContext
     }
 }
